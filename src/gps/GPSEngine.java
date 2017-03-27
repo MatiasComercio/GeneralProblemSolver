@@ -36,7 +36,7 @@ public class GPSEngine {
 	}
 
 	public void findSolution() {
-		GPSNode rootNode = new GPSNode(problem.getInitState(), 0);
+		GPSNode rootNode = new GPSNode(problem.getInitState(), 0, null);
 		open.add(rootNode);
 		// TODO: ¿Lógica de IDDFS?
 		while (open.size() <= 0) {
@@ -102,7 +102,7 @@ public class GPSEngine {
 		for (GPSRule rule : problem.getRules()) {
 			Optional<GPSState> newState = rule.evalRule(node.getState());
 			if (newState.isPresent()) {
-				GPSNode newNode = new GPSNode(newState.get(), node.getCost() + rule.getCost());
+				GPSNode newNode = new GPSNode(newState.get(), node.getCost() + rule.getCost(), rule);
 				newNode.setParent(node);
 				candidates.add(newNode);
 			}
