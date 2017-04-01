@@ -1,0 +1,80 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>ar.edu.itba.sia</groupId>
+  <artifactId>gps</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>GeneralProblemSolver</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
+    <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
+    <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>java8-doclint-disabled</id>
+      <activation>
+        <jdk>[1.8,)</jdk>
+      </activation>
+      <properties>
+        <javadoc.opts>-Xdoclint:none</javadoc.opts>
+      </properties>
+    </profile>
+  </profiles>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+        <configuration>
+          <compilerVersion>${maven.compiler.compilerVersion}</compilerVersion>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+          <!-- Prevents an endPosTable exception during compilation => for Immutables -->
+          <useIncrementalCompilation>false</useIncrementalCompilation>
+        </configuration>
+      </plugin>
+      <plugin>  <!-- Create sources.jar -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>${maven-source-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>${maven-javadoc-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <additionalparam>${javadoc.opts}</additionalparam>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
